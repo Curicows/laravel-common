@@ -1,0 +1,39 @@
+{
+    "name": "curicows/laravel-common",
+    "description": "Shared Laravel common utilities for Curicows applications.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Curicows\\LaravelCommon\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Curicows\\LaravelCommon\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.5",
+        "illuminate/support": "^13.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.29",
+        "orchestra/testbench": "^11.0",
+        "phpunit/phpunit": "^12.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Curicows\\LaravelCommon\\LaravelCommonServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "lint": "pint --test",
+        "format": "pint",
+        "test": "phpunit"
+    }
+}
