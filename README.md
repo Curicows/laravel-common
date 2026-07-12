@@ -12,6 +12,12 @@ composer require curicows/laravel-common
 
 Laravel discovers the package service provider automatically.
 
+Publish the package configuration when the application needs to override the defaults:
+
+```bash
+php artisan vendor:publish --tag=laravel-common-config
+```
+
 ## Development
 
 ```bash
