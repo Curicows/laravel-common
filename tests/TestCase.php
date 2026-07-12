@@ -7,6 +7,7 @@ namespace Curicows\LaravelCommon\Tests;
 use Curicows\LaravelCommon\LaravelCommonServiceProvider;
 use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Spatie\LaravelData\LaravelDataServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {
@@ -18,6 +19,7 @@ abstract class TestCase extends OrchestraTestCase
     {
         return [
             LaravelCommonServiceProvider::class,
+            LaravelDataServiceProvider::class,
         ];
     }
 }
