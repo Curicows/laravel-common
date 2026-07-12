@@ -1,0 +1,16 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use App\Bases\Dto;
+
+class $CLASS$ extends Dto
+{
+    public function __construct(
+        public readonly ?string $name,
+        public readonly ?string $created_by,
+        public readonly ?string $updated_by,
+        public readonly ?string $deleted_by,
+    ) {
+    }
+}

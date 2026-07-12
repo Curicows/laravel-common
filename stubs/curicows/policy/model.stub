@@ -1,0 +1,51 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use App\Bases\Policy;
+use App\Enums\Permission\ModuleEnum;
+use App\Enums\Permission\PermissionEnum;
+use App\Models\User;
+use $MODEL_NAMESPACE$\$MODEL_STUDLY$;
+
+class $CLASS$ extends Policy
+{
+    public ModuleEnum $module {
+        get => ModuleEnum::$MODULE_STUDLY$;
+    }
+
+    public function viewAny(User $loggedUser): bool
+    {
+        return $loggedUser->can(PermissionEnum::$MODULE_STUDLY$$MODEL_STUDLY$ViewAny);
+    }
+
+    public function view(User $loggedUser, $MODEL_STUDLY$ $$MODEL_CAMEL$): bool
+    {
+        return $loggedUser->can(PermissionEnum::$MODULE_STUDLY$$MODEL_STUDLY$View);
+    }
+
+    public function create(User $loggedUser): bool
+    {
+        return $loggedUser->can(PermissionEnum::$MODULE_STUDLY$$MODEL_STUDLY$Create);
+    }
+
+    public function update(User $loggedUser, $MODEL_STUDLY$ $$MODEL_CAMEL$): bool
+    {
+        return $loggedUser->can(PermissionEnum::$MODULE_STUDLY$$MODEL_STUDLY$Update);
+    }
+
+    public function delete(User $loggedUser, $MODEL_STUDLY$ $$MODEL_CAMEL$): bool
+    {
+        return $loggedUser->can(PermissionEnum::$MODULE_STUDLY$$MODEL_STUDLY$Delete);
+    }
+
+    public function restore(User $loggedUser, $MODEL_STUDLY$ $$MODEL_CAMEL$): bool
+    {
+        return $loggedUser->can(PermissionEnum::$MODULE_STUDLY$$MODEL_STUDLY$Restore);
+    }
+
+    public function forceDelete(User $loggedUser, $MODEL_STUDLY$ $$MODEL_CAMEL$): bool
+    {
+        return $loggedUser->can(PermissionEnum::$MODULE_STUDLY$$MODEL_STUDLY$ForceDelete);
+    }
+}

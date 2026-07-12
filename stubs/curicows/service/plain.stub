@@ -1,0 +1,7 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use App\Bases\Service;
+
+class $CLASS$ extends Service {}

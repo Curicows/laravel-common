@@ -1,0 +1,106 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use App\Http\Base\Repository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use $MODEL_NAMESPACE$\$MODEL_CLASS$;
+use $REQUEST_NAMESPACE$\$MODEL_CLASS$Request;
+
+class $CLASS$ extends Repository
+{
+    /**
+     * @param array{
+     *     name?: string,
+     * } $where
+     * @return Collection|$MODEL_CLASS$[]
+     */
+    public function all(array $where = []): Collection
+    {
+        return $this->query($where)->get();
+    }
+
+    /**
+     * @param array{
+     *     name?: string,
+     * } $where
+     * @return Builder | $MODEL_CLASS$
+     */
+    public function query(array $where = []): Builder|$MODEL_CLASS$
+    {
+        $query = $MODEL_CLASS$::query();
+        if (isset($where['name'])) {
+            $query->where('name', 'ilike', "%{$where['name']}%");
+        }
+        return $query;
+    }
+
+    /**
+     * @param array{
+     *     name?: string,
+     * } $where
+     * @return LengthAwarePaginator
+     */
+    public function paginate(array $where = []): LengthAwarePaginator
+    {
+        return $this->query($where)->orderByDesc('id')->paginate();
+    }
+
+    /**
+     * @param $MODEL_CLASS$Request $data
+     * @return $MODEL_CLASS$
+     */
+    public function create($MODEL_CLASS$Request $data): $MODEL_CLASS$
+    {
+        return $MODEL_CLASS$::create($data->validated());
+    }
+
+    /**
+     * @param $MODEL_CLASS$Request $data
+     * @param $id
+     * @return $MODEL_CLASS$
+     * @throws \Exception
+     */
+    public function update($MODEL_CLASS$Request $data, $id): $MODEL_CLASS$
+    {
+        $$MODEL_VAR$ = $this->findOrThrow($id);
+
+        $$MODEL_VAR$->fill($data->validated());
+
+        $$MODEL_VAR$->save();
+
+        return $$MODEL_VAR$;
+    }
+
+    /**
+     * @param string|int $id
+     * @return $MODEL_CLASS$
+     * @throws \Exception
+     */
+    public function findOrThrow(string|int $id): $MODEL_CLASS$
+    {
+        $$MODEL_VAR$ = $this->find($id);
+
+        if (!$$MODEL_VAR$) {
+            throw new \Exception('$MODEL_CLASS$ not found', 404);
+        }
+
+        return $$MODEL_VAR$;
+    }
+
+    public function find(string|int $id): $MODEL_CLASS$|null
+    {
+        return $MODEL_CLASS$::find($id);
+    }
+
+    public function delete(string|int $id): $MODEL_CLASS$
+    {
+        $$MODEL_VAR$ = $this->findOrThrow($id);
+
+        $$MODEL_VAR$->delete();
+
+        return $$MODEL_VAR$;
+    }
+}

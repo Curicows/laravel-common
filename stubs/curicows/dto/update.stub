@@ -1,0 +1,19 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use App\Bases\Dto;
+use App\Decorators\Dtos\UniqueSoftDelete;
+use App\Decorators\Dtos\References\RouteParameterReference;
+use Spatie\LaravelData\Attributes\FromRouteParameter;
+
+class $CLASS$ extends Dto
+{
+    public function __construct(
+        #[UniqueSoftDelete("$MODULE_SNAKE$_$MODEL_SNAKE$s", ignore: new RouteParameterReference("$MODEL_CAMEL$Id"))]
+        public readonly string $name,
+        #[FromRouteParameter('$MODEL_CAMEL$Id')]
+        public readonly string $$MODEL_CAMEL$Id,
+    ) {
+    }
+}

@@ -1,0 +1,24 @@
+@php
+/**
+ *
+ */
+@endphp
+@extends('layout')
+
+@section('content')
+<x-breadcrumb module="$MODULE_STUDLY$" />
+
+<x-$MODULE_KEBAB$::menu />
+
+<x-container>
+    <x-card title="Criar">
+        <x-form :href="route('$MODULE_SNAKE$.$MODEL_KEBAB$.store')" cols="1" error>
+            <x-form.input name="name" label="Nome" type="text" old />
+
+            <x-slot:actions class="justify-end">
+                <x-form.button.save-button />
+            </x-slot:actions>
+        </x-form>
+    </x-card>
+</x-container>
+@endsection

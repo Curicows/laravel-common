@@ -1,0 +1,25 @@
+@php
+/**
+ * @var $MODEL_NAMESPACE$\$MODEL_STUDLY$ $$MODEL_CAMEL$
+ */
+@endphp
+@extends('layout')
+
+@section('content')
+<x-breadcrumb module="$MODULE_STUDLY$" />
+
+<x-$MODULE_KEBAB$::menu />
+
+<x-container>
+    <x-card title="Visualizar">
+        @can("$MODULE_SNAKE$_admin")
+            <x-slot:action>
+                <x-link type="edit" :href="route('$MODULE_SNAKE$.$MODEL_KEBAB$.edit', $$MODEL_CAMEL$->id)" />
+            </x-slot:action>
+        @endcan
+        <x-grid cols="1">
+            <x-form.input name="name" label="Nome" :value="$$MODEL_CAMEL$->name" disabled />
+        </x-grid>
+    </x-card>
+</x-container>
+@endsection

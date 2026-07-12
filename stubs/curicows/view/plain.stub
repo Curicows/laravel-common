@@ -1,0 +1,9 @@
+@php
+/**
+ *
+ */
+@endphp
+@extends('layout')
+
+@section('content')
+@endsection

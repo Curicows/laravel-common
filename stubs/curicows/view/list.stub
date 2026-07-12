@@ -1,0 +1,38 @@
+@php
+/**
+ * @var Illuminate\Contracts\Pagination\LengthAwarePaginator<int, $MODEL_NAMESPACE$\$MODEL_STUDLY$> $$MODEL_CAMEL$s
+ */
+@endphp
+@extends('layout')
+
+@section('content')
+    <x-breadcrumb module="$MODULE_STUDLY$" />
+
+    <x-$MODULE_KEBAB$::menu :back-url="route('$MODULE_SNAKE$.$MODEL_KEBAB$.index')" />
+
+    <x-table.filter :href="route('$MODULE_SNAKE$.$MODEL_KEBAB$.index')">
+        <x-table.filter.input name="name" placeholder="Buscar por nome" />
+    </x-table.filter>
+
+    <x-table title="$MODEL_STUDLY$s">
+        <x-slot:header>
+            <x-table.column-header label="ID" />
+            <x-table.column-header label="Nome" />
+            <x-table.column-header label="Ações" class="text-center" />
+        </x-slot:header>
+        @foreach($$MODEL_CAMEL$s as $$MODEL_CAMEL$)
+            <x-table.row>
+                <x-table.column-head :value="$$MODEL_CAMEL$->id" />
+                <x-table.column :value="$$MODEL_CAMEL$->name" />
+                <x-table.column class="flex gap-4 justify-end">
+                    @can('tool_admin')
+                        <x-menu.link :href="route('$MODULE_SNAKE$.$MODEL_KEBAB$.edit', $$MODEL_CAMEL$->id)" type="edit"/>
+                    @endcan
+                    <x-link :href="route('$MODULE_SNAKE$.$MODEL_KEBAB$.show', $$MODEL_CAMEL$->id)" type="show"/>
+                </x-table.column>
+            </x-table.row>
+        @endforeach
+    </x-table>
+
+    <x-table.pagination :content="$$MODEL_CAMEL$s" />
+@endsection
