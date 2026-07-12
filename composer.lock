@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2abef04710e14e84627b8ee727d83228",
+    "content-hash": "225f42653b2580c068f05e8104002661",
     "packages": [
         {
             "name": "brick/math",
@@ -2110,6 +2110,90 @@
                 }
             ],
             "time": "2026-01-02T08:56:05+00:00"
+        },
+        {
+            "name": "mrpunyapal/laravel-auth-jobs",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MrPunyapal/laravel-auth-jobs.git",
+                "reference": "9a833c6fc15ed72af9765b1152741ba113dcc322"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MrPunyapal/laravel-auth-jobs/zipball/9a833c6fc15ed72af9765b1152741ba113dcc322",
+                "reference": "9a833c6fc15ed72af9765b1152741ba113dcc322",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^11.0||^12.0||^13.0",
+                "php": "^8.2||^8.3||^8.4||^8.5",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.9||^3.0",
+                "laravel/pint": "^1.14",
+                "mrpunyapal/rector-pest": "^0.1.0",
+                "nunomaduro/collision": "^8.1.1||^7.10.0",
+                "orchestra/testbench": "^11.0.0||^10.0.0||^9.0.0",
+                "pestphp/pest": "^3.0||^4.0",
+                "pestphp/pest-plugin-arch": "^3.0||^4.0",
+                "pestphp/pest-plugin-laravel": "^3.0||^4.0",
+                "pestphp/pest-plugin-type-coverage": "^3.0||^4.0",
+                "phpstan/extension-installer": "^1.3||^2.0",
+                "phpstan/phpstan-deprecation-rules": "^1.1||^2.0",
+                "phpstan/phpstan-phpunit": "^1.3||^2.0",
+                "rector/rector": "^2.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MrPunyapal\\LaravelAuthJobs\\LaravelAuthJobsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MrPunyapal\\LaravelAuthJobs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Punyapal Shah",
+                    "email": "mrpunyapal@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This package allows you to access the authenticated user while processing jobs in the queue.",
+            "homepage": "https://github.com/mrpunyapal/laravel-auth-jobs",
+            "keywords": [
+                "Authentication",
+                "MrPunyapal",
+                "authorization",
+                "jobs",
+                "laravel",
+                "laravel-auth",
+                "laravel-auth-jobs",
+                "laravel-jobs",
+                "laravel-queue",
+                "queue"
+            ],
+            "support": {
+                "issues": "https://github.com/MrPunyapal/laravel-auth-jobs/issues",
+                "source": "https://github.com/MrPunyapal/laravel-auth-jobs/tree/1.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/MrPunyapal",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-05-03T12:44:58+00:00"
         },
         {
             "name": "nesbot/carbon",

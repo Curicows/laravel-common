@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Curicows\LaravelCommon\Tests\Unit\Bases;
 
 use Curicows\LaravelCommon\Bases\Subscriber;
+use Curicows\LaravelCommon\Jobs\Middleware\AuthenticateQueuedUser;
 use Curicows\LaravelCommon\Tests\Fixtures\SampleEvent;
 use Curicows\LaravelCommon\Tests\Fixtures\SampleSubscriber;
 use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
@@ -28,9 +29,12 @@ class SubscriberTest extends TestCase
         self::assertCount(1, $reflection->getAttributes(Queue::class));
     }
 
-    public function test_subscriber_keeps_app_specific_middleware_out_by_default(): void
+    public function test_subscriber_uses_authenticate_queued_user_middleware_by_default(): void
     {
-        self::assertSame([], (new SampleSubscriber)->middleware());
+        self::assertContainsOnlyInstancesOf(
+            AuthenticateQueuedUser::class,
+            (new SampleSubscriber)->middleware(),
+        );
     }
 
     public function test_subscriber_returns_event_handler_map(): void

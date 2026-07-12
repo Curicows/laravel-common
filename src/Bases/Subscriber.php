@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Curicows\LaravelCommon\Bases;
 
+use Curicows\LaravelCommon\Jobs\Middleware\AuthenticateQueuedUser;
 use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Queue\Attributes\Queue;
@@ -23,6 +24,6 @@ abstract class Subscriber implements ShouldQueueAfterCommit
      */
     public function middleware(): array
     {
-        return [];
+        return [new AuthenticateQueuedUser];
     }
 }
