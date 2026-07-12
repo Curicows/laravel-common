@@ -15,4 +15,9 @@ class ServiceProviderTest extends TestCase
     {
         self::assertTrue($this->app->providerIsLoaded(LaravelCommonServiceProvider::class));
     }
+
+    public function test_service_provider_merges_package_config(): void
+    {
+        self::assertTrue(config('laravel-common.subscribers.authenticate_queued_user'));
+    }
 }

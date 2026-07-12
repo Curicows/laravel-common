@@ -24,6 +24,10 @@ abstract class Subscriber implements ShouldQueueAfterCommit
      */
     public function middleware(): array
     {
+        if (! config('laravel-common.subscribers.authenticate_queued_user', true)) {
+            return [];
+        }
+
         return [new AuthenticateQueuedUser];
     }
 }

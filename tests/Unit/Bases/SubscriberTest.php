@@ -8,12 +8,12 @@ use Curicows\LaravelCommon\Bases\Subscriber;
 use Curicows\LaravelCommon\Jobs\Middleware\AuthenticateQueuedUser;
 use Curicows\LaravelCommon\Tests\Fixtures\SampleEvent;
 use Curicows\LaravelCommon\Tests\Fixtures\SampleSubscriber;
+use Curicows\LaravelCommon\Tests\TestCase;
 use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Queue\Attributes\Queue;
 use Illuminate\Queue\Attributes\Tries;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 #[CoversClass(Subscriber::class)]
@@ -35,6 +35,13 @@ class SubscriberTest extends TestCase
             AuthenticateQueuedUser::class,
             (new SampleSubscriber)->middleware(),
         );
+    }
+
+    public function test_subscriber_can_disable_authenticate_queued_user_middleware(): void
+    {
+        config()->set('laravel-common.subscribers.authenticate_queued_user', false);
+
+        self::assertSame([], (new SampleSubscriber)->middleware());
     }
 
     public function test_subscriber_returns_event_handler_map(): void
