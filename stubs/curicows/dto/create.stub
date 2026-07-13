@@ -1,0 +1,15 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use App\Bases\Dto;
+use App\Decorators\Dtos\UniqueSoftDelete;
+
+class $CLASS$ extends Dto
+{
+    public function __construct(
+        #[UniqueSoftDelete("$MODULE_SNAKE$_$MODEL_SNAKE$s")]
+        public readonly string $name,
+    ) {
+    }
+}

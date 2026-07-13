@@ -1,0 +1,24 @@
+@php
+/**
+ * @var $MODEL_NAMESPACE$\$MODEL_STUDLY$ $$MODEL_CAMEL$
+ */
+@endphp
+@extends('layout')
+
+@section('content')
+<x-breadcrumb module="$MODULE_STUDLY$" />
+
+<x-$MODULE_KEBAB$::menu />
+
+<x-container>
+    <x-card title="Editar">
+        <x-form :href="route('$MODULE_SNAKE$.$MODEL_KEBAB$.update', $$MODEL_CAMEL$->id)" cols="1" error>
+            <x-form.input name="name" label="Nome" :value="$$MODEL_CAMEL$->name" old />
+
+            <x-slot:actions class="justify-end">
+                <x-form.button.save-button />
+            </x-slot:actions>
+        </x-form>
+    </x-card>
+</x-container>
+@endsection

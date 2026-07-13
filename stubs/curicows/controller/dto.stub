@@ -1,0 +1,92 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use App\Bases\Controller;
+use Gate;
+use $DTO_NAMESPACE$\$MODEL_STUDLY$\Create$MODEL_STUDLY$Dto;
+use $DTO_NAMESPACE$\$MODEL_STUDLY$\Search$MODEL_STUDLY$Dto;
+use $DTO_NAMESPACE$\$MODEL_STUDLY$\Update$MODEL_STUDLY$Dto;
+use $DTO_NAMESPACE$\$MODEL_STUDLY$\$MODEL_STUDLY$Dto;
+use $REPOSITORY_NAMESPACE$\$MODEL_STUDLY$Repository;
+use $MODEL_NAMESPACE$\$MODEL_STUDLY$;
+use Spatie\LaravelData\DataCollection;
+use Spatie\LaravelData\PaginatedDataCollection;
+
+class $CLASS$ extends Controller
+{
+    public function __construct(
+        public readonly $MODEL_STUDLY$Repository $$MODEL_CAMEL$Repository,
+    )
+    {
+    }
+
+    public function index(Search$MODEL_STUDLY$Dto $data): DataCollection
+    {
+        Gate::authorize('view-any', $MODEL_STUDLY$::class);
+
+        $$MODEL_CAMEL$s = $this->$MODEL_CAMEL$Repository->all($data);
+
+        return $MODEL_STUDLY$Dto::data($$MODEL_CAMEL$s);
+    }
+
+    public function paginate(Search$MODEL_STUDLY$Dto $data): PaginatedDataCollection
+    {
+        Gate::authorize('view-any', $MODEL_STUDLY$::class);
+
+        $$MODEL_CAMEL$s = $this->$MODEL_CAMEL$Repository->paginate($data);
+
+        return $MODEL_STUDLY$Dto::paginate($$MODEL_CAMEL$s);
+    }
+
+    public function show(string $$MODEL_CAMEL$Id): $MODEL_STUDLY$Dto
+    {
+        $$MODEL_CAMEL$ = $this->$MODEL_CAMEL$Repository->findOrThrow($$MODEL_CAMEL$Id);
+
+        Gate::authorize('view', $$MODEL_CAMEL$);
+
+        return $MODEL_STUDLY$Dto::from($$MODEL_CAMEL$);
+    }
+
+    public function store(Create$MODEL_STUDLY$Dto $data): $MODEL_STUDLY$Dto
+    {
+        Gate::authorize('create', $MODEL_STUDLY$::class);
+
+        $$MODEL_CAMEL$ = $this->$MODEL_CAMEL$Repository->create($data);
+
+        return $MODEL_STUDLY$Dto::from($$MODEL_CAMEL$);
+    }
+
+    public function update(Update$MODEL_STUDLY$Dto $data): $MODEL_STUDLY$Dto
+    {
+        $$MODEL_CAMEL$ = $this->$MODEL_CAMEL$Repository->findOrThrow($data->$MODEL_CAMEL$Id);
+
+        Gate::authorize('update', $$MODEL_CAMEL$);
+
+        $$MODEL_CAMEL$ = $this->$MODEL_CAMEL$Repository->update($data);
+
+        return $MODEL_STUDLY$Dto::from($$MODEL_CAMEL$);
+    }
+
+    public function destroy(string $$MODEL_CAMEL$Id): $MODEL_STUDLY$Dto
+    {
+        $$MODEL_CAMEL$ = $this->$MODEL_CAMEL$Repository->findOrThrow($$MODEL_CAMEL$Id);
+
+        Gate::authorize('delete', $$MODEL_CAMEL$);
+
+        $$MODEL_CAMEL$ = $this->$MODEL_CAMEL$Repository->delete($$MODEL_CAMEL$Id);
+
+        return $MODEL_STUDLY$Dto::from($$MODEL_CAMEL$);
+    }
+
+    public function restore(string $$MODEL_CAMEL$Id): $MODEL_STUDLY$Dto
+    {
+        $$MODEL_CAMEL$ = $this->$MODEL_CAMEL$Repository->findOrThrow($$MODEL_CAMEL$Id);
+
+        Gate::authorize('restore', $$MODEL_CAMEL$);
+
+        $$MODEL_CAMEL$ = $this->$MODEL_CAMEL$Repository->restore($$MODEL_CAMEL$Id);
+
+        return $MODEL_STUDLY$Dto::from($$MODEL_CAMEL$);
+    }
+}

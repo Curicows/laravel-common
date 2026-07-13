@@ -1,0 +1,171 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use App\Bases\Repository;
+use App\Helpers\OrderBy;
+use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use $MODEL_NAMESPACE$\$MODEL_STUDLY$;
+use $DTO_NAMESPACE$\$MODEL_STUDLY$\Create$MODEL_STUDLY$Dto;
+use $DTO_NAMESPACE$\$MODEL_STUDLY$\Search$MODEL_STUDLY$Dto;
+use $DTO_NAMESPACE$\$MODEL_STUDLY$\Update$MODEL_STUDLY$Dto;
+
+class $CLASS$ extends Repository
+{
+    /**
+     * @param ?Search$MODEL_STUDLY$Dto $where
+     * @param OrderBy $orderBy
+     * @return Collection<int, $MODEL_STUDLY$>
+     */
+    public function all(?Search$MODEL_STUDLY$Dto $where = null, OrderBy $orderBy = new OrderBy()): Collection
+    {
+        return $this->query($where)->orderBy($orderBy->column, $orderBy->direction)->get();
+    }
+
+    /**
+     * @param ?Search$MODEL_STUDLY$Dto $where
+     * @return Builder|$MODEL_STUDLY$
+     */
+    public function query(?Search$MODEL_STUDLY$Dto $where = null): Builder|$MODEL_STUDLY$
+    {
+        $query = $MODEL_STUDLY$::query();
+        if ($where?->name) {
+            $query->whereLike('name', "%$where->name%");
+        }
+        if ($where?->created_by) {
+            $query->whereCreatedBy($where?->created_by);
+        }
+        if ($where?->updated_by) {
+            $query->whereUpdatedBy($where?->updated_by);
+        }
+        if ($where?->deleted_by) {
+            $query->whereDeletedBy($where?->deleted_by);
+        }
+        return $query;
+    }
+
+    /**
+     * @param ?Search$MODEL_STUDLY$Dto $where
+     * @param OrderBy $orderBy
+     * @return LengthAwarePaginator<int, $MODEL_STUDLY$>
+     */
+    public function paginate(?Search$MODEL_STUDLY$Dto $where = null, OrderBy $orderBy = new OrderBy(direction: "desc")): LengthAwarePaginator
+    {
+        return $this->query($where)->orderBy($orderBy->column, $orderBy->direction)->paginate();
+    }
+
+    /**
+     * @param Search$MODEL_STUDLY$Dto|null $where
+     * @param OrderBy $orderBy
+     * @return $MODEL_STUDLY$|null
+     */
+    public function first(?Search$MODEL_STUDLY$Dto $where = null, OrderBy $orderBy = new OrderBy(direction: "desc")): ?$MODEL_STUDLY$
+    {
+        return $this->query($where)->orderBy($orderBy->column, $orderBy->direction)->first();
+    }
+
+    /**
+     * @param Create$MODEL_STUDLY$Dto $data
+     * @return $MODEL_STUDLY$
+     */
+    public function create(Create$MODEL_STUDLY$Dto $data): $MODEL_STUDLY$
+    {
+        return $MODEL_STUDLY$::create($data->toArray());
+    }
+
+    /**
+     * @param Update$MODEL_STUDLY$Dto $data
+     *
+     * @return $MODEL_STUDLY$
+     * @throws Exception
+     */
+    public function update(Update$MODEL_STUDLY$Dto $data): $MODEL_STUDLY$
+    {
+        $$MODEL_CAMEL$ = $this->findOrThrow($data->$MODEL_CAMEL$Id);
+
+        $$MODEL_CAMEL$->fill($data->toArray());
+
+        $$MODEL_CAMEL$->save();
+
+        return $$MODEL_CAMEL$;
+    }
+
+    /**
+     * @param string $id
+     * @param bool $withTrashed
+     * @return $MODEL_STUDLY$
+     * @throws Exception
+     */
+    public function findOrThrow(string $id, bool $withTrashed = false): $MODEL_STUDLY$
+    {
+        $$MODEL_CAMEL$ = $this->find($id, $withTrashed);
+
+        if (!$$MODEL_CAMEL$) {
+            throw new Exception('$MODEL_STUDLY$ not found', 404);
+        }
+
+        return $$MODEL_CAMEL$;
+    }
+
+    /**
+     * @param string $id
+     * @param bool $withTrashed
+     * @return $MODEL_STUDLY$|null
+     */
+    public function find(string $id, bool $withTrashed = false): ?$MODEL_STUDLY$
+    {
+        $query = $MODEL_STUDLY$::query();
+
+        if ($withTrashed) {
+            $query->withTrashed();
+        }
+
+        return $query->find($id);
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return $MODEL_STUDLY$
+     * @throws Exception
+     */
+    public function delete(string $id): $MODEL_STUDLY$
+    {
+        $$MODEL_CAMEL$ = $this->findOrThrow($id);
+
+        $$MODEL_CAMEL$->delete();
+
+        return $$MODEL_CAMEL$;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return $MODEL_STUDLY$
+     * @throws Exception
+     */
+    public function restore(string $id): $MODEL_STUDLY$
+    {
+        $$MODEL_CAMEL$ = $this->findOrThrow($id, true);
+
+        $$MODEL_CAMEL$->restore();
+
+        return $$MODEL_CAMEL$;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function forceDelete(string $id): bool
+    {
+        $$MODEL_CAMEL$ = $this->findOrThrow($id, true);
+
+        return $$MODEL_CAMEL$->forceDelete();
+    }
+}

@@ -1,0 +1,11 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use App\Bases\Dto;
+
+class $CLASS$ extends Dto
+{
+    public function __construct() {
+    }
+}

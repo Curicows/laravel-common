@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Curicows\LaravelCommon;
 
+use Curicows\LaravelCommon\Console\Commands\Generator\ControllerMakeCommand;
+use Curicows\LaravelCommon\Console\Commands\Generator\DtoMakeCommand;
+use Curicows\LaravelCommon\Console\Commands\Generator\PolicyMakeCommand;
+use Curicows\LaravelCommon\Console\Commands\Generator\RepositoryMakeCommand;
+use Curicows\LaravelCommon\Console\Commands\Generator\ServiceMakeCommand;
+use Curicows\LaravelCommon\Console\Commands\Generator\ViewMakeCommand;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelCommonServiceProvider extends ServiceProvider
@@ -18,5 +24,20 @@ class LaravelCommonServiceProvider extends ServiceProvider
         $this->publishes([
             dirname(__DIR__).'/config/laravel-common.php' => config_path('laravel-common.php'),
         ], 'laravel-common-config');
+
+        $this->publishes([
+            dirname(__DIR__).'/stubs/curicows' => base_path('stubs/curicows'),
+        ], 'laravel-common-stubs');
+
+        if ($this->app->runningInConsole() && config('laravel-common.commands.generator.enabled', true)) {
+            $this->commands([
+                ControllerMakeCommand::class,
+                DtoMakeCommand::class,
+                PolicyMakeCommand::class,
+                RepositoryMakeCommand::class,
+                ServiceMakeCommand::class,
+                ViewMakeCommand::class,
+            ]);
+        }
     }
 }

@@ -1,0 +1,17 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use App\Bases\Dto;
+use Carbon\Carbon;
+
+class $CLASS$ extends Dto
+{
+    public function __construct(
+        public readonly string $id,
+        public readonly ?Carbon $created_at,
+        public readonly ?Carbon $updated_at,
+        public readonly ?Carbon $deleted_at,
+    ) {
+    }
+}
