@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Curicows\LaravelCommon\Bases\Module;
 
+use Curicows\LaravelCommon\Bases\BaseServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
-abstract class ModuleServiceProvider extends ServiceProvider
+abstract class ModuleServiceProvider extends BaseServiceProvider
 {
     abstract public function moduleName(): string;
 
@@ -137,12 +136,5 @@ abstract class ModuleServiceProvider extends ServiceProvider
     protected function moduleNameLower(): string
     {
         return Str::kebab($this->moduleName());
-    }
-
-    protected function bootPolicies(): void
-    {
-        foreach ($this->policies() as $model => $policy) {
-            Gate::policy($model, $policy);
-        }
     }
 }
