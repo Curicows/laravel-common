@@ -51,6 +51,16 @@ class BaseServiceProviderTest extends TestCase
         ], TestBaseServiceProvider::$calls);
         self::assertInstanceOf(TestPolicy::class, Gate::getPolicyFor(TestModel::class));
     }
+
+    public function test_default_hooks_are_noops(): void
+    {
+        $provider = new EmptyBaseServiceProvider($this->app);
+
+        $provider->register();
+        $provider->boot();
+
+        self::assertNull(Gate::getPolicyFor(EmptyTestModel::class));
+    }
 }
 
 final class TestBaseServiceProvider extends BaseServiceProvider
@@ -118,3 +128,7 @@ final class TestRegisteredServiceProvider extends ServiceProvider
 final class TestModel extends Model {}
 
 final class TestPolicy {}
+
+final class EmptyBaseServiceProvider extends BaseServiceProvider {}
+
+final class EmptyTestModel extends Model {}

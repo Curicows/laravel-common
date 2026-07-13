@@ -33,6 +33,36 @@ class BaseCommandTest extends TestCase
         self::assertStringContainsString('Broken', $tester->getDisplay());
     }
 
+    public function test_failure_can_return_custom_status(): void
+    {
+        $tester = new CommandTester($this->command(new CustomStatusFailingBaseCommand));
+
+        $status = $tester->execute([]);
+
+        self::assertSame(E_ERROR, $status);
+        self::assertStringContainsString('Broken', $tester->getDisplay());
+    }
+
+    public function test_option_as_int_returns_default_when_option_is_empty(): void
+    {
+        $tester = new CommandTester($this->command(new IntegerOptionBaseCommand));
+
+        $status = $tester->execute(['--count' => '']);
+
+        self::assertSame(BaseCommand::SUCCESS, $status);
+        self::assertStringContainsString('5', $tester->getDisplay());
+    }
+
+    public function test_option_as_int_casts_without_minimum(): void
+    {
+        $tester = new CommandTester($this->command(new IntegerOptionWithoutMinimumBaseCommand));
+
+        $status = $tester->execute(['--count' => '7']);
+
+        self::assertSame(BaseCommand::SUCCESS, $status);
+        self::assertStringContainsString('7', $tester->getDisplay());
+    }
+
     public function test_option_as_int_clamps_to_minimum(): void
     {
         $tester = new CommandTester($this->command(new IntegerOptionBaseCommand));
@@ -51,6 +81,24 @@ class BaseCommandTest extends TestCase
 
         self::assertSame(BaseCommand::FAILURE, $status);
         self::assertStringContainsString('Unexpected failure', $tester->getDisplay());
+    }
+
+    public function test_run_safely_returns_success_for_non_integer_result(): void
+    {
+        $tester = new CommandTester($this->command(new SafelySuccessfulBaseCommand));
+
+        $status = $tester->execute([]);
+
+        self::assertSame(BaseCommand::SUCCESS, $status);
+    }
+
+    public function test_run_safely_returns_integer_result(): void
+    {
+        $tester = new CommandTester($this->command(new SafelyIntegerBaseCommand));
+
+        $status = $tester->execute([]);
+
+        self::assertSame(3, $status);
     }
 
     private function command(BaseCommand $command): BaseCommand
@@ -81,6 +129,16 @@ final class FailingBaseCommand extends BaseCommand
     }
 }
 
+final class CustomStatusFailingBaseCommand extends BaseCommand
+{
+    protected $signature = 'test:custom-status-failing-base-command';
+
+    public function handle(): int
+    {
+        return $this->failure('Broken', E_ERROR);
+    }
+}
+
 final class IntegerOptionBaseCommand extends BaseCommand
 {
     protected $signature = 'test:integer-option-base-command {--count=}';
@@ -88,6 +146,18 @@ final class IntegerOptionBaseCommand extends BaseCommand
     public function handle(): int
     {
         $this->line((string) $this->optionAsInt('count', default: 5, minimum: 1));
+
+        return self::SUCCESS;
+    }
+}
+
+final class IntegerOptionWithoutMinimumBaseCommand extends BaseCommand
+{
+    protected $signature = 'test:integer-option-without-minimum-base-command {--count=}';
+
+    public function handle(): int
+    {
+        $this->line((string) $this->optionAsInt('count'));
 
         return self::SUCCESS;
     }
@@ -102,5 +172,25 @@ final class SafelyFailingBaseCommand extends BaseCommand
         return $this->runSafely(static function (): void {
             throw new RuntimeException('Unexpected failure');
         });
+    }
+}
+
+final class SafelySuccessfulBaseCommand extends BaseCommand
+{
+    protected $signature = 'test:safely-successful-base-command';
+
+    public function handle(): int
+    {
+        return $this->runSafely(static fn (): string => 'ok');
+    }
+}
+
+final class SafelyIntegerBaseCommand extends BaseCommand
+{
+    protected $signature = 'test:safely-integer-base-command';
+
+    public function handle(): int
+    {
+        return $this->runSafely(static fn (): int => 3);
     }
 }

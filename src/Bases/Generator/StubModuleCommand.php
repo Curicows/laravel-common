@@ -71,7 +71,7 @@ abstract class StubModuleCommand extends GeneratorCommand
     {
         return [
             ['force', 'f', InputOption::VALUE_NONE, 'Create the file even if it already exists'],
-            ['filename', null, InputOption::VALUE_NONE, 'The file name'],
+            ['filename', null, InputOption::VALUE_REQUIRED, 'The file name'],
             ...$this->additionalOptions(),
         ];
     }
