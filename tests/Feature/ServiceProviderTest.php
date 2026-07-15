@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Curicows\LaravelCommon\Tests\Feature;
 
+use Curicows\LaravelCommon\Http\Dtos\Auth\TwoFactor\UserTwoFactorDto;
 use Curicows\LaravelCommon\LaravelCommonServiceProvider;
 use Curicows\LaravelCommon\Tests\TestCase;
 use Illuminate\Support\Facades\Artisan;
@@ -20,6 +21,12 @@ class ServiceProviderTest extends TestCase
     public function test_service_provider_merges_package_config(): void
     {
         self::assertTrue(config('laravel-common.subscribers.authenticate_queued_user'));
+        self::assertNull(config('laravel-common.models.user'));
+        self::assertSame(
+            UserTwoFactorDto::class,
+            config('laravel-common.models.user_two_factor_dto'),
+        );
+        self::assertNull(config('laravel-common.models.user_google_oauth_dto'));
         self::assertTrue(config('laravel-common.commands.generator.enabled'));
         self::assertSame(base_path('stubs/curicows'), config('laravel-common.stubs.path'));
         self::assertSame('app/Http/Dtos', config('laravel-common.stubs.generator.dto.path'));
