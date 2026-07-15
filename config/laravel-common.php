@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use Curicows\LaravelCommon\Http\Dtos\Auth\TwoFactor\UserTwoFactorDto;
+use Curicows\LaravelCommon\Services\Auth\TwoFactor\EmailTwoFactorMethod;
+use Curicows\LaravelCommon\Services\Auth\TwoFactor\OtpTwoFactorMethod;
+
 return [
     'commands' => [
         'generator' => [
@@ -24,5 +28,22 @@ return [
 
     'subscribers' => [
         'authenticate_queued_user' => env('LARAVEL_COMMON_SUBSCRIBERS_AUTHENTICATE_QUEUED_USER', true),
+    ],
+
+    'models' => [
+        'user' => null,
+        'user_two_factor_dto' => UserTwoFactorDto::class,
+        'user_google_oauth_dto' => null,
+    ],
+
+    'two_factor' => [
+        'bad_request_exception' => null,
+        'methods' => [
+            EmailTwoFactorMethod::class,
+            OtpTwoFactorMethod::class,
+        ],
+        'email' => [
+            'mailable' => null,
+        ],
     ],
 ];
