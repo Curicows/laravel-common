@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Curicows\LaravelCommon\Bases\Generator;
 
 use Illuminate\Support\Str;
-use Nwidart\Modules\Commands\Make\GeneratorCommand;
 use Nwidart\Modules\Laravel\LaravelFileRepository;
 use Nwidart\Modules\Module;
 use Nwidart\Modules\Traits\ModuleCommandTrait;
@@ -13,7 +12,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
- * TODO: convert to extends the Command class from laravel
  * TODO: allow create files without the module
  * TODO: module can be nullable to allow generations on the base path
  */
@@ -37,9 +35,9 @@ abstract class StubModuleCommand extends GeneratorCommand
      */
     public function getClassNamespace($module): string
     {
-        $path_namespace = $this->path_namespace($this->getPath());
+        $pathNamespace = $this->pathNamespace($this->getPath());
 
-        return $this->module_namespace($module->getStudlyName(), $this->getDefaultNamespace().($path_namespace ? '\\'.$path_namespace : ''));
+        return $this->moduleNamespace($module->getStudlyName(), $this->getDefaultNamespace().($pathNamespace ? '\\'.$pathNamespace : ''));
     }
 
     abstract protected function basePath(): string;
@@ -73,7 +71,7 @@ abstract class StubModuleCommand extends GeneratorCommand
     {
         return [
             ['force', 'f', InputOption::VALUE_NONE, 'Create the file even if it already exists'],
-            ['filename', null, InputOption::VALUE_NONE, 'The file name'],
+            ['filename', null, InputOption::VALUE_REQUIRED, 'The file name'],
             ...$this->additionalOptions(),
         ];
     }
@@ -139,11 +137,11 @@ abstract class StubModuleCommand extends GeneratorCommand
         $module = $this->module();
 
         return [
-            'DTO_NAMESPACE' => $this->module_namespace($module, 'Http/Dtos'),
-            'REPOSITORY_NAMESPACE' => $this->module_namespace($module, 'Http/Repositories'),
-            'CONTROLLER_NAMESPACE' => $this->module_namespace($module, 'Http/Controllers'),
-            'REQUEST_NAMESPACE' => $this->module_namespace($module, 'Http/Requests'),
-            'MODEL_NAMESPACE' => $this->module_namespace($module, 'Models'),
+            'DTO_NAMESPACE' => $this->moduleNamespace($module, 'Http/Dtos'),
+            'REPOSITORY_NAMESPACE' => $this->moduleNamespace($module, 'Http/Repositories'),
+            'CONTROLLER_NAMESPACE' => $this->moduleNamespace($module, 'Http/Controllers'),
+            'REQUEST_NAMESPACE' => $this->moduleNamespace($module, 'Http/Requests'),
+            'MODEL_NAMESPACE' => $this->moduleNamespace($module, 'Models'),
         ];
     }
 
