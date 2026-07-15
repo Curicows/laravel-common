@@ -7,6 +7,7 @@ namespace Curicows\LaravelCommon\Tests\Feature;
 use Curicows\LaravelCommon\Http\Dtos\Auth\TwoFactor\UserTwoFactorDto;
 use Curicows\LaravelCommon\LaravelCommonServiceProvider;
 use Curicows\LaravelCommon\Tests\TestCase;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Artisan;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -44,6 +45,18 @@ class ServiceProviderTest extends TestCase
         ], $paths);
     }
 
+    public function test_service_provider_publishes_package_migrations(): void
+    {
+        $paths = LaravelCommonServiceProvider::pathsToPublish(
+            LaravelCommonServiceProvider::class,
+            'laravel-common-migrations',
+        );
+
+        self::assertSame([
+            dirname(__DIR__, 2).'/database/migrations' => database_path('migrations'),
+        ], $paths);
+    }
+
     public function test_service_provider_publishes_package_stubs(): void
     {
         $paths = LaravelCommonServiceProvider::pathsToPublish(
@@ -54,6 +67,11 @@ class ServiceProviderTest extends TestCase
         self::assertSame([
             dirname(__DIR__, 2).'/stubs/curicows' => base_path('stubs/curicows'),
         ], $paths);
+    }
+
+    public function test_service_provider_registers_created_by_blueprint_macro(): void
+    {
+        self::assertTrue(Blueprint::hasMacro('createdBy'));
     }
 
     public function test_service_provider_registers_generator_commands(): void

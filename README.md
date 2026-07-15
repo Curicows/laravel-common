@@ -18,6 +18,12 @@ Publish the package configuration when the application needs to override the def
 php artisan vendor:publish --tag=laravel-common-config
 ```
 
+Publish the optional base migrations when an application wants to start from the common user schema:
+
+```bash
+php artisan vendor:publish --tag=laravel-common-migrations
+```
+
 ## Development
 
 ```bash
