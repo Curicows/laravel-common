@@ -42,7 +42,8 @@
     "scripts": {
         "lint": "pint --test",
         "format": "pint",
-        "test": "phpunit"
+        "test": "phpunit",
+        "test:teamcity": "phpunit --coverage-clover ./clover.xml --teamcity"
     },
     "config": {
         "allow-plugins": {
